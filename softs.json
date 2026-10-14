@@ -15,9 +15,9 @@
     },
     "ps1": {
       "label": "プレイステーション",
-      "keyword": "プレイステーション",
+      "keyword": "",
       "ng": "PS2|PS3|PS4|PS5|PSP|Vita|プレイステーション2|アーカイブス|ゲームアーカイブス",
-      "api_ng": "PS2 PS3 PS4 PS5 PSP Vita プレイステーション2"
+      "api_ng": "PS2 PS3 PS4 PS5 PSP Vita プレイステーション2 サターン ドリームキャスト ゲームキューブ Switch"
     },
     "ps2": {
       "label": "プレイステーション2",
@@ -110,7 +110,7 @@
       "title": "バイオハザード2",
       "keyword": "バイオハザード2",
       "must": "バイオハザード\\s*2(?![0-9])",
-      "ng": "RE:2|ゲームキューブ|N64|64"
+      "ng": "RE:2|ゲームキューブ|NINTENDO\\s*64|ニンテンドウ\\s*64|N64"
     },
     {
       "id": "ps1-gt",
@@ -197,14 +197,6 @@
       "ng": ""
     },
     {
-      "id": "vita-necrodancer",
-      "platform": "vita",
-      "title": "クリプト・オブ・ネクロダンサー",
-      "keyword": "ネクロダンサー",
-      "must": "ネクロダンサー",
-      "ng": ""
-    },
-    {
       "id": "vita-muvluv-alt",
       "platform": "vita",
       "title": "マブラヴ オルタネイティヴ",
@@ -234,14 +226,6 @@
       "title": "ドラゴンクエストビルダーズ アレフガルドを復活せよ",
       "keyword": "ドラゴンクエストビルダーズ",
       "must": "ドラゴンクエスト\\s*ビルダーズ(?!\\s*2)",
-      "ng": ""
-    },
-    {
-      "id": "vita-godeater-offshot",
-      "platform": "vita",
-      "title": "GOD EATER OFF SHOT ソーマ・シックザール編",
-      "keyword": "ゴッドイーター オフショット",
-      "must": "(OFF\\s*SHOT|オフショット).*ソーマ|ソーマ.*(OFF\\s*SHOT|オフショット)",
       "ng": ""
     },
     {

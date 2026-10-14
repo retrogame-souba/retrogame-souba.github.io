@@ -81,7 +81,7 @@ def main():
     results = []
     for i, soft in enumerate(conf["softs"], 1):
         pf = platforms[soft["platform"]]
-        keyword = f'{pf["keyword"]} {soft["keyword"]} 中古'
+        keyword = " ".join(x for x in [pf["keyword"], soft["keyword"], "中古"] if x)
         must = re.compile(soft["must"], re.I)
         ngs = [common_ng, re.compile(pf["ng"], re.I)]
         if soft.get("ng"):
