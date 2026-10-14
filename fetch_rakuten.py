@@ -91,7 +91,14 @@ def main():
             ngs.append(re.compile(soft["ng"], re.I))
 
         print(f"[{i}/{len(conf['softs'])}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
-        ng_keyword = " ".join(x for x in [pf.get("api_ng", ""), soft.get("api_ng", "")] if x)
+        # 楽天のNGKeywordは128文字（バイト）未満まで。ソフト用→機種用の順に、入るぶんだけ使う
+        ng_words = (soft.get("api_ng", "") + " " + pf.get("api_ng", "")).split()
+        ng_keyword = ""
+        for w in ng_words:
+            cand = (ng_keyword + " " + w).strip()
+            if len(cand.encode("utf-8")) >= 128:
+                break
+            ng_keyword = cand
         groups = {"normal_good": [], "normal_damaged": [], "budget_good": [], "budget_damaged": []}
         fetched, total, failed = 0, 0, False
         # 採用が少ないときは、次のページ（31件目〜）も見に行く（最大MAX_PAGESページ）
