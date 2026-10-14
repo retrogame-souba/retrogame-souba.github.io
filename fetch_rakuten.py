@@ -24,6 +24,7 @@ WAIT_SEC = 1.5  # 楽天APIへの間隔（1秒1回まで）
 MAX_PAGES = 3   # 1本のソフトにつき、最大何ページ（30件ずつ）見るか
 ENOUGH = 10     # 採用がこの件数に届いたら、次のページは見ない
 
+LIMITED = re.compile(r"限定版|限定生産|初回限定|特装版|プレミアム\s*(BOX|ボックス|エディション)|コレクターズ|スペシャル\s*(BOX|ボックス|エディション)|同梱版|ツインパック", re.I)
 BUDGET = re.compile(r"アルティメット\s*ヒッツ|MEGA\s*HITS|メガヒッツ|ベスト|BEST|廉価版|PlayStation\s*the\s*Best|PS\s*one\s*Books|コレクション", re.I)
 DAMAGED = re.compile(r"説明書なし|説明書無|表紙なし|箱なし|箱無|ディスクのみ|ソフトのみ|カセットのみ|ROMのみ|本体のみ|ジャンク|難あり")
 
@@ -99,7 +100,7 @@ def main():
             if len(cand.encode("utf-8")) >= 128:
                 break
             ng_keyword = cand
-        groups = {"normal_good": [], "normal_damaged": [], "budget_good": [], "budget_damaged": []}
+        groups = {f"{e}_{c}": [] for e in ("normal", "budget", "limited") for c in ("good", "damaged")}
         fetched, total, failed = 0, 0, False
         # 採用が少ないときは、次のページ（31件目〜）も見に行く（最大MAX_PAGESページ）
         for page in range(1, MAX_PAGES + 1):
@@ -123,7 +124,12 @@ def main():
                     continue
                 if not must.search(name) or any(ng.search(name) for ng in ngs):
                     continue
-                edition = "budget" if BUDGET.search(name) else "normal"
+                if LIMITED.search(name):
+                    edition = "limited"
+                elif BUDGET.search(name):
+                    edition = "budget"
+                else:
+                    edition = "normal"
                 cond = "damaged" if DAMAGED.search(name) else "good"
                 groups[f"{edition}_{cond}"].append(it)
                 total += 1

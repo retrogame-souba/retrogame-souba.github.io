@@ -4,13 +4,13 @@
     "famicom": {
       "label": "ファミコン",
       "keyword": "ファミコン",
-      "ng": "スーパーファミコン|SFC|ディスクシステム|Wii|3DS|Switch",
+      "ng": "スーパーファミコン|SFC|ディスクシステム|Wii|3DS|Switch|PS4|PS5|HD-2D|ミニ|GBA|アドバンス|(?<![A-Z])DS(?![A-Z])",
       "api_ng": "スーパーファミコン SFC Wii"
     },
     "sfc": {
       "label": "スーパーファミコン",
       "keyword": "スーパーファミコン",
-      "ng": "Wii|3DS|Switch|ミニ|クラシック",
+      "ng": "Wii|3DS|Switch|ミニ|クラシック|GBA|アドバンス|(?<![A-Z])DS(?![A-Z])|PS4|PS5|ピクセルリマスター",
       "api_ng": "Wii Switch"
     },
     "ps1": {
@@ -38,7 +38,7 @@
       "api_ng": "PSP PS4 Switch"
     }
   },
-  "common_ng": "TCG|遊戯王|攻略|ガイド|Vジャンプ|EASY\\s*TO\\s*FIND|サウンドトラック|サントラ|設定資料|ポスター|アクリル|フィギュア",
+  "common_ng": "TCG|遊戯王|攻略|ガイド|Vジャンプ|EASY\\s*TO\\s*FIND|サウンドトラック|サントラ|設定資料|ポスター|アクリル|フィギュア|まとめ|\\d+本セット|本体同梱|コントローラ同梱|ハンドル|GT\\s*FORCE|周辺機器",
   "softs": [
     {
       "id": "sfc-mario-world",
@@ -62,7 +62,7 @@
       "title": "ゼルダの伝説 神々のトライフォース",
       "keyword": "ゼルダの伝説 神々のトライフォース",
       "must": "神々のトライフォース(?!\\s*2)",
-      "ng": ""
+      "ng": "4つの剣"
     },
     {
       "id": "sfc-ff6",
@@ -94,7 +94,7 @@
       "title": "ドラゴンクエストIII",
       "keyword": "ドラゴンクエスト3",
       "must": "ドラゴンクエスト\\s*(III|3)(?![I0-9])",
-      "ng": "I・II|1・2|25周年"
+      "ng": "I・II|1・2|25周年|HD-2D|そして伝説へ…\\s*\\(?リメイク"
     },
     {
       "id": "ps1-ff7",
@@ -152,7 +152,7 @@
       "title": "グランツーリスモ4",
       "keyword": "グランツーリスモ4",
       "must": "グランツーリスモ\\s*4(?![0-9])",
-      "ng": "プロローグ|Prologue"
+      "ng": "プロローグ|Prologue|ハンドル|GT\\s*FORCE|コントローラ"
     },
     {
       "id": "psp-mhf",
