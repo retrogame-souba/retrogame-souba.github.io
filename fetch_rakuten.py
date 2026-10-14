@@ -1,0 +1,135 @@
+"""
+fetch_rakuten.py
+================
+softs.json に書いたソフトを、楽天市場APIで1本ずつ調べて
+「版（通常版／廉価版）× 状態（良／説明書なし等）」ごとの相場を出す。
+
+使い方:
+    source ~/.rakuten_env && python3 fetch_rakuten.py
+出力:
+    rakuten_prices.json（このファイルと同じフォルダ）
+"""
+
+import os, re, json, time, statistics, unicodedata, urllib.parse, urllib.request, urllib.error
+from pathlib import Path
+from datetime import datetime, timezone
+
+HERE = Path(__file__).parent
+SOFTS_PATH = HERE / "softs.json"
+OUTPUT_PATH = HERE / "rakuten_prices.json"
+
+SITE = "https://retrogame-souba.github.io"
+API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
+WAIT_SEC = 1.5  # 楽天APIへの間隔（1秒1回まで）
+
+BUDGET = re.compile(r"アルティメット\s*ヒッツ|MEGA\s*HITS|メガヒッツ|ベスト|BEST|廉価版|PlayStation\s*the\s*Best|PS\s*one\s*Books|コレクション", re.I)
+DAMAGED = re.compile(r"説明書なし|説明書無|表紙なし|箱なし|箱無|ディスクのみ|ソフトのみ|カセットのみ|ROMのみ|本体のみ|ジャンク|難あり")
+
+
+def norm(s: str) -> str:
+    """全角→半角、いろいろな「−」を「-」にそろえる"""
+    s = unicodedata.normalize("NFKC", s)
+    return re.sub(r"[‐‑‒–—―−]", "-", s)
+
+
+def search(keyword: str) -> list[dict]:
+    params = {
+        "applicationId": os.environ["RAKUTEN_APP_ID"],
+        "accessKey": os.environ["RAKUTEN_ACCESS_KEY"],
+        "affiliateId": os.environ.get("RAKUTEN_AFFILIATE_ID", ""),
+        "keyword": keyword,
+        "hits": 30,
+        "sort": "+itemPrice",
+        "availability": 1,  # 在庫ありのみ
+        "format": "json",
+        "formatVersion": 2,
+    }
+    req = urllib.request.Request(
+        API_URL + "?" + urllib.parse.urlencode(params),
+        headers={"Referer": SITE + "/", "Origin": SITE, "User-Agent": "retrogame-souba/0.1"},
+    )
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.load(r).get("Items", [])
+
+
+def summarize(items: list[dict]) -> dict:
+    prices = [x["itemPrice"] for x in items]
+    return {
+        "count": len(prices),
+        "min": min(prices),
+        "median": int(statistics.median(prices)),
+        "items": [
+            {
+                "price": x["itemPrice"],
+                "shop": x["shopName"],
+                "name": x["itemName"],
+                "url": x.get("affiliateUrl") or x["itemUrl"],
+                "postage_included": x.get("postageFlag") == 0,
+            }
+            for x in items[:3]  # 安い順に3件だけ保存
+        ],
+    }
+
+
+def main():
+    conf = json.loads(SOFTS_PATH.read_text(encoding="utf-8"))
+    platforms = conf["platforms"]
+    common_ng = re.compile(conf["common_ng"], re.I)
+
+    results = []
+    for i, soft in enumerate(conf["softs"], 1):
+        pf = platforms[soft["platform"]]
+        keyword = f'{pf["keyword"]} {soft["keyword"]} 中古'
+        must = re.compile(soft["must"], re.I)
+        ngs = [common_ng, re.compile(pf["ng"], re.I)]
+        if soft.get("ng"):
+            ngs.append(re.compile(soft["ng"], re.I))
+
+        print(f"[{i}/{len(conf['softs'])}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
+        try:
+            items = search(keyword)
+        except urllib.error.HTTPError as e:
+            print("エラー", e.code, e.read().decode()[:200])
+            time.sleep(WAIT_SEC)
+            continue
+        except Exception as e:
+            print("エラー", e)
+            time.sleep(WAIT_SEC)
+            continue
+
+        groups = {"normal_good": [], "normal_damaged": [], "budget_good": [], "budget_damaged": []}
+        for it in items:
+            name = norm(it["itemName"])
+            if "中古" not in name:
+                continue
+            if not must.search(name) or any(ng.search(name) for ng in ngs):
+                continue
+            edition = "budget" if BUDGET.search(name) else "normal"
+            cond = "damaged" if DAMAGED.search(name) else "good"
+            groups[f"{edition}_{cond}"].append(it)
+
+        total = sum(len(v) for v in groups.values())
+        print(f"{len(items)}件中 {total}件採用")
+
+        results.append({
+            "id": soft["id"],
+            "title": soft["title"],
+            "platform": soft["platform"],
+            "platform_label": pf["label"],
+            "groups": {k: summarize(v) for k, v in groups.items() if v},
+            "sample_count": total,
+        })
+        time.sleep(WAIT_SEC)
+
+    output = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "source": "rakuten",
+        "total": len(results),
+        "items": results,
+    }
+    OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\n✅ {OUTPUT_PATH} に {len(results)} 本分を書き出しました")
+
+
+if __name__ == "__main__":
+    main()

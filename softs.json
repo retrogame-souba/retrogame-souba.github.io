@@ -1,0 +1,42 @@
+{
+  "_説明": "楽天APIで相場を調べるソフトのリスト。keyword=楽天で検索する言葉 / must=商品名にこれが含まれていたら採用（正規表現） / ng=これが含まれていたら除外（正規表現）",
+  "platforms": {
+    "famicom": { "label": "ファミコン",           "keyword": "ファミコン",       "ng": "スーパーファミコン|SFC|ディスクシステム|Wii|3DS|Switch" },
+    "sfc":     { "label": "スーパーファミコン",   "keyword": "スーパーファミコン", "ng": "Wii|3DS|Switch|ミニ|クラシック" },
+    "ps1":     { "label": "プレイステーション",   "keyword": "プレイステーション", "ng": "PS2|PS3|PS4|PS5|PSP|Vita|プレイステーション2|アーカイブス|ゲームアーカイブス" },
+    "ps2":     { "label": "プレイステーション2", "keyword": "PS2",               "ng": "PS3|PS4|PS5|PSP|Vita|3DS|Switch" },
+    "psp":     { "label": "PSP",                  "keyword": "PSP",               "ng": "Vita|PS3|PS4|3DS|Switch" },
+    "vita":    { "label": "PS Vita",              "keyword": "Vita",              "ng": "PSP|PS3|PS4|PS5|Switch|Steam" }
+  },
+  "common_ng": "TCG|遊戯王|攻略|ガイド|Vジャンプ|EASY\\s*TO\\s*FIND|サウンドトラック|サントラ|設定資料|ポスター|アクリル|フィギュア",
+  "softs": [
+    { "id": "sfc-mario-world",   "platform": "sfc", "title": "スーパーマリオワールド",           "keyword": "スーパーマリオワールド",         "must": "スーパーマリオ\\s*ワールド(?!\\s*2)", "ng": "ヨッシーアイランド" },
+    { "id": "sfc-dkc",           "platform": "sfc", "title": "スーパードンキーコング",           "keyword": "スーパードンキーコング",         "must": "スーパー\\s*ドンキー\\s*コング(?!\\s*[23])", "ng": "" },
+    { "id": "sfc-zelda-lttp",    "platform": "sfc", "title": "ゼルダの伝説 神々のトライフォース", "keyword": "ゼルダの伝説 神々のトライフォース", "must": "神々のトライフォース(?!\\s*2)", "ng": "" },
+    { "id": "sfc-ff6",           "platform": "sfc", "title": "ファイナルファンタジーVI",         "keyword": "ファイナルファンタジー6",        "must": "(ファイナルファンタジー|FINAL\\s*FANTASY|FF)\\s*(VI|6)(?![I0-9])", "ng": "ピクセルリマスター" },
+    { "id": "sfc-dq6",           "platform": "sfc", "title": "ドラゴンクエストVI",               "keyword": "ドラゴンクエスト6",              "must": "ドラゴンクエスト\\s*(VI|6)(?![I0-9])", "ng": "" },
+    { "id": "fc-smb",            "platform": "famicom", "title": "スーパーマリオブラザーズ",     "keyword": "スーパーマリオブラザーズ",       "must": "スーパーマリオ\\s*ブラザーズ(?!\\s*[23]|\\s*USA)", "ng": "" },
+    { "id": "fc-dq3",            "platform": "famicom", "title": "ドラゴンクエストIII",          "keyword": "ドラゴンクエスト3",              "must": "ドラゴンクエスト\\s*(III|3)(?![I0-9])", "ng": "I・II|1・2|25周年" },
+    { "id": "ps1-ff7",           "platform": "ps1", "title": "ファイナルファンタジーVII",        "keyword": "ファイナルファンタジー7",        "must": "(ファイナルファンタジー|FINAL\\s*FANTASY|FF)\\s*(VII|7)(?![I0-9])", "ng": "インターナショナル|リメイク|REMAKE|リバース|REBIRTH|アドベントチルドレン|ダージュ|クライシスコア" },
+    { "id": "ps1-bio2",          "platform": "ps1", "title": "バイオハザード2",                  "keyword": "バイオハザード2",                "must": "バイオハザード\\s*2(?![0-9])", "ng": "RE:2|ゲームキューブ|N64|64" },
+    { "id": "ps1-gt",            "platform": "ps1", "title": "グランツーリスモ",                 "keyword": "グランツーリスモ",               "must": "グランツーリスモ(?!\\s*[2-7]|\\s*(SPORT|スポーツ|コンセプト|HD|PSP))", "ng": "" },
+    { "id": "ps1-mgs",           "platform": "ps1", "title": "メタルギアソリッド",               "keyword": "メタルギアソリッド",             "must": "メタルギア\\s*ソリッド(?!\\s*[2-5V])", "ng": "インテグラル|ピースウォーカー|ポータブル|ツインスネークス|HD" },
+    { "id": "ps2-ff10",          "platform": "ps2", "title": "ファイナルファンタジーX",          "keyword": "ファイナルファンタジーX",        "must": "(ファイナルファンタジー|FINAL\\s*FANTASY)\\s*(X|10)(?!\\s*(-|ー|I|2))", "ng": "インターナショナル|HD" },
+    { "id": "ps2-dq8",           "platform": "ps2", "title": "ドラゴンクエストVIII",             "keyword": "ドラゴンクエスト8",              "must": "ドラゴンクエスト\\s*(VIII|8)(?![0-9])", "ng": "" },
+    { "id": "ps2-gt4",           "platform": "ps2", "title": "グランツーリスモ4",                "keyword": "グランツーリスモ4",              "must": "グランツーリスモ\\s*4(?![0-9])", "ng": "プロローグ|Prologue" },
+    { "id": "psp-mhf",           "platform": "psp", "title": "モンスターハンターポータブル",     "keyword": "モンスターハンターポータブル",   "must": "モンスターハンター\\s*ポータブル(?!\\s*(2|3|2nd|3rd))", "ng": "" },
+    { "id": "psp-mhf2",          "platform": "psp", "title": "モンスターハンターポータブル 2nd", "keyword": "モンスターハンターポータブル 2nd", "must": "モンスターハンター\\s*ポータブル\\s*2nd(?!\\s*G)", "ng": "" },
+    { "id": "vita-p4g",          "platform": "vita", "title": "ペルソナ4 ザ・ゴールデン",        "keyword": "ペルソナ4 ザ・ゴールデン",       "must": "ペルソナ\\s*4\\s*ザ\\s*・?\\s*ゴールデン|P4G", "ng": "アニメ|ダンシング|DANCING|アリーナ" },
+    { "id": "vita-danganronpa",  "platform": "vita", "title": "ダンガンロンパ1・2 Reload",       "keyword": "ダンガンロンパ1・2 Reload",      "must": "ダンガンロンパ\\s*1\\s*・\\s*2\\s*Reload", "ng": "", "_要確認": "元リストは「希望の学園と絶望の高校生」（PSP版の名前）。Vitaでは「1・2 Reload」として発売" },
+    { "id": "vita-odin",         "platform": "vita", "title": "オーディンスフィア レイヴスラシル", "keyword": "オーディンスフィア レイヴスラシル", "must": "オーディンスフィア\\s*レイヴスラシル", "ng": "" },
+    { "id": "vita-necrodancer",  "platform": "vita", "title": "クリプト・オブ・ネクロダンサー",   "keyword": "クリプト・オブ・ネクロダンサー", "must": "ネクロダンサー", "ng": "" },
+    { "id": "vita-muvluv-alt",   "platform": "vita", "title": "マブラヴ オルタネイティヴ",       "keyword": "マブラヴ オルタネイティヴ",      "must": "マブラヴ\\s*オルタネイティヴ(?!\\s*(トータル|クロニクルズ))", "ng": "" },
+    { "id": "vita-muvluv",       "platform": "vita", "title": "マブラヴ",                        "keyword": "マブラヴ",                       "must": "マブラヴ(?!\\s*(オルタ|アンリミテッド|サプリメント))", "ng": "" },
+    { "id": "vita-asterisk",     "platform": "vita", "title": "学戦都市アスタリスク フェスタ 鳳華絢爛", "keyword": "アスタリスク 鳳華絢爛",   "must": "鳳華絢爛", "ng": "" },
+    { "id": "vita-dqb",          "platform": "vita", "title": "ドラゴンクエストビルダーズ アレフガルドを復活せよ", "keyword": "ドラゴンクエストビルダーズ", "must": "ドラゴンクエスト\\s*ビルダーズ(?!\\s*2)", "ng": "" },
+    { "id": "vita-godeater-offshot", "platform": "vita", "title": "GOD EATER OFF SHOT ソーマ・シックザール編", "keyword": "GOD EATER OFF SHOT ソーマ", "must": "OFF\\s*SHOT.*ソーマ", "ng": "" },
+    { "id": "vita-stormlover2",  "platform": "vita", "title": "STORM LOVER 2nd V",               "keyword": "STORM LOVER 2nd V",              "must": "STORM\\s*LOVER\\s*2nd\\s*V", "ng": "" },
+    { "id": "vita-taisho-mobius","platform": "vita", "title": "大正メビウスライン Vitable",      "keyword": "大正メビウスライン Vitable",     "must": "大正\\s*メビウスライン", "ng": "" },
+    { "id": "vita-utapri-m3",    "platform": "vita", "title": "うたの☆プリンスさまっ♪ MUSIC3",  "keyword": "うたの プリンスさまっ MUSIC3",   "must": "MUSIC\\s*3", "ng": "" }
+  ]
+}
