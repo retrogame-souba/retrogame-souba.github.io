@@ -32,7 +32,7 @@ def norm(s: str) -> str:
     return re.sub(r"[‐‑‒–—―−]", "-", s)
 
 
-def search(keyword: str) -> list[dict]:
+def search(keyword: str, ng_keyword: str = "") -> list[dict]:
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
         "accessKey": os.environ["RAKUTEN_ACCESS_KEY"],
@@ -44,6 +44,8 @@ def search(keyword: str) -> list[dict]:
         "format": "json",
         "formatVersion": 2,
     }
+    if ng_keyword:
+        params["NGKeyword"] = ng_keyword  # 検索の時点で外す言葉
     req = urllib.request.Request(
         API_URL + "?" + urllib.parse.urlencode(params),
         headers={"Referer": SITE + "/", "Origin": SITE, "User-Agent": "retrogame-souba/0.1"},
@@ -86,8 +88,9 @@ def main():
             ngs.append(re.compile(soft["ng"], re.I))
 
         print(f"[{i}/{len(conf['softs'])}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
+        ng_keyword = " ".join(x for x in [pf.get("api_ng", ""), soft.get("api_ng", "")] if x)
         try:
-            items = search(keyword)
+            items = search(keyword, ng_keyword)
         except urllib.error.HTTPError as e:
             print("エラー", e.code, e.read().decode()[:200])
             time.sleep(WAIT_SEC)
