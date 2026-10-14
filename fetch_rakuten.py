@@ -21,6 +21,8 @@ OUTPUT_PATH = HERE / "rakuten_prices.json"
 SITE = "https://retrogame-souba.github.io"
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
 WAIT_SEC = 1.5  # 楽天APIへの間隔（1秒1回まで）
+MAX_PAGES = 3   # 1本のソフトにつき、最大何ページ（30件ずつ）見るか
+ENOUGH = 10     # 採用がこの件数に届いたら、次のページは見ない
 
 BUDGET = re.compile(r"アルティメット\s*ヒッツ|MEGA\s*HITS|メガヒッツ|ベスト|BEST|廉価版|PlayStation\s*the\s*Best|PS\s*one\s*Books|コレクション", re.I)
 DAMAGED = re.compile(r"説明書なし|説明書無|表紙なし|箱なし|箱無|ディスクのみ|ソフトのみ|カセットのみ|ROMのみ|本体のみ|ジャンク|難あり")
@@ -32,13 +34,14 @@ def norm(s: str) -> str:
     return re.sub(r"[‐‑‒–—―−]", "-", s)
 
 
-def search(keyword: str, ng_keyword: str = "") -> list[dict]:
+def search(keyword: str, ng_keyword: str = "", page: int = 1) -> list[dict]:
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
         "accessKey": os.environ["RAKUTEN_ACCESS_KEY"],
         "affiliateId": os.environ.get("RAKUTEN_AFFILIATE_ID", ""),
         "keyword": keyword,
         "hits": 30,
+        "page": page,
         "sort": "+itemPrice",
         "availability": 1,  # 在庫ありのみ
         "format": "json",
@@ -89,30 +92,43 @@ def main():
 
         print(f"[{i}/{len(conf['softs'])}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
         ng_keyword = " ".join(x for x in [pf.get("api_ng", ""), soft.get("api_ng", "")] if x)
-        try:
-            items = search(keyword, ng_keyword)
-        except urllib.error.HTTPError as e:
-            print("エラー", e.code, e.read().decode()[:200])
-            time.sleep(WAIT_SEC)
-            continue
-        except Exception as e:
-            print("エラー", e)
-            time.sleep(WAIT_SEC)
-            continue
-
         groups = {"normal_good": [], "normal_damaged": [], "budget_good": [], "budget_damaged": []}
-        for it in items:
-            name = norm(it["itemName"])
-            if "中古" not in name:
-                continue
-            if not must.search(name) or any(ng.search(name) for ng in ngs):
-                continue
-            edition = "budget" if BUDGET.search(name) else "normal"
-            cond = "damaged" if DAMAGED.search(name) else "good"
-            groups[f"{edition}_{cond}"].append(it)
+        fetched, total, failed = 0, 0, False
+        # 採用が少ないときは、次のページ（31件目〜）も見に行く（最大MAX_PAGESページ）
+        for page in range(1, MAX_PAGES + 1):
+            try:
+                items = search(keyword, ng_keyword, page)
+            except urllib.error.HTTPError as e:
+                print("エラー", e.code, e.read().decode()[:200])
+                failed = True
+                break
+            except Exception as e:
+                print("エラー", e)
+                failed = True
+                break
+            finally:
+                time.sleep(WAIT_SEC)
 
-        total = sum(len(v) for v in groups.values())
-        print(f"{len(items)}件中 {total}件採用")
+            fetched += len(items)
+            for it in items:
+                name = norm(it["itemName"])
+                if "中古" not in name:
+                    continue
+                if not must.search(name) or any(ng.search(name) for ng in ngs):
+                    continue
+                edition = "budget" if BUDGET.search(name) else "normal"
+                cond = "damaged" if DAMAGED.search(name) else "good"
+                groups[f"{edition}_{cond}"].append(it)
+                total += 1
+
+            if total >= ENOUGH or len(items) < 30:
+                break
+        if failed:
+            continue
+
+        for v in groups.values():
+            v.sort(key=lambda x: x["itemPrice"])
+        print(f"{fetched}件中 {total}件採用")
 
         results.append({
             "id": soft["id"],
@@ -122,7 +138,6 @@ def main():
             "groups": {k: summarize(v) for k, v in groups.items() if v},
             "sample_count": total,
         })
-        time.sleep(WAIT_SEC)
 
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
