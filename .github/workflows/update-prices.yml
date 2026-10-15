@@ -1,12 +1,18 @@
 # 毎日深夜にミニPC（self-hosted runner）でブックオフの相場を取りに行き、
 # bookoff_prices.json だけをコミットする。
 # 楽天APIは自宅IPに制限しているので、GitHubのサーバーではなくミニPCで動かす。
+#
+# GitHubの定時実行は混雑で遅れたり飛ばされたりするので、1時間おきに3回予約しておく。
+# 2回目以降は「今日の分がもう更新済み」なら何もせずに終わる（やり直し専用）。
+# 更新できたら毎回Telegramに報告する（音なし）。
 name: 相場データ更新
 
 on:
   schedule:
-    - cron: "17 17 * * *"   # UTC 17:17 = 日本時間 2:17（毎日）
-  workflow_dispatch:         # GitHubアプリ等から「今すぐ実行」できるボタン
+    - cron: "17 17 * * *"   # 日本時間 2:17（本番）
+    - cron: "17 18 * * *"   # 日本時間 3:17（やり直し1）
+    - cron: "17 19 * * *"   # 日本時間 4:17（やり直し2）
+  workflow_dispatch:         # GitHubアプリ等から「今すぐ実行」できるボタン（いつでも必ず取得する）
 
 # 公開リポジトリなので、pull_request などの外部から起動できるきっかけは付けないこと
 # （他人のコードがミニPCで実行されるのを防ぐため）
@@ -25,7 +31,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: 今日の分がもう更新済みか確認
+        id: done
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          python3 - <<'EOF'
+          import json, os
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          JST = timezone(timedelta(hours=9))
+          now = datetime.now(JST)
+          today_start = now.replace(hour=2, minute=0, second=0, microsecond=0)
+          if now < today_start:
+              today_start -= timedelta(days=1)
+          p = Path("bookoff_prices.json")
+          done = False
+          if os.environ["EVENT"] == "schedule" and p.exists():
+              t = datetime.fromisoformat(json.loads(p.read_text(encoding="utf-8"))["generated_at"]).astimezone(JST)
+              done = t >= today_start
+              print(f"最終更新: {t:%Y-%m-%d %H:%M}（日本時間）")
+          print("今日の分は更新済みなので、何もせず終了します" if done else "取得を始めます")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"skip={'true' if done else 'false'}\n")
+          EOF
+
       - name: ブックオフ（Vita）を取得
+        if: steps.done.outputs.skip != 'true'
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
@@ -33,9 +65,11 @@ jobs:
         run: python3 fetch_bookoff.py Vita
 
       - name: 相場を集計
+        if: steps.done.outputs.skip != 'true'
         run: python3 build_bookoff.py
 
       - name: 結果をコミット
+        if: steps.done.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -48,6 +82,18 @@ jobs:
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
+      - name: 成功をTelegramに報告
+        if: success() && steps.done.outputs.skip != 'true'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          TOTAL=$(python3 -c "import json;print(json.load(open('bookoff_prices.json',encoding='utf-8'))['total'])")
+          curl -sS -o /dev/null -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TG_CHAT}" \
+            --data-urlencode "disable_notification=true" \
+            --data-urlencode "text=✅ レトロゲーム相場を更新しました（$(TZ=Asia/Tokyo date +%m/%d\ %H:%M)・Vita ${TOTAL}本）"
+
       - name: 失敗をTelegramに通知
         if: failure()
         env:
@@ -55,8 +101,8 @@ jobs:
           TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          curl -sS -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+          curl -sS -o /dev/null -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TG_CHAT}" \
             --data-urlencode "disable_notification=true" \
-            --data-urlencode "text=❌ レトロゲーム相場の更新に失敗しました
+            --data-urlencode "text=❌ レトロゲーム相場の更新に失敗しました（次の予約時刻にやり直します）
           ${RUN_URL}"
