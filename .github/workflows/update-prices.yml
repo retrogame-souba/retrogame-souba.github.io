@@ -1,0 +1,62 @@
+# 毎日深夜にミニPC（self-hosted runner）でブックオフの相場を取りに行き、
+# bookoff_prices.json だけをコミットする。
+# 楽天APIは自宅IPに制限しているので、GitHubのサーバーではなくミニPCで動かす。
+name: 相場データ更新
+
+on:
+  schedule:
+    - cron: "17 17 * * *"   # UTC 17:17 = 日本時間 2:17（毎日）
+  workflow_dispatch:         # GitHubアプリ等から「今すぐ実行」できるボタン
+
+# 公開リポジトリなので、pull_request などの外部から起動できるきっかけは付けないこと
+# （他人のコードがミニPCで実行されるのを防ぐため）
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: [self-hosted, minipc]
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ブックオフ（Vita）を取得
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: python3 fetch_bookoff.py Vita
+
+      - name: 相場を集計
+        run: python3 build_bookoff.py
+
+      - name: 結果をコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bookoff_prices.json
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "相場データ更新 $(TZ=Asia/Tokyo date +%Y-%m-%d)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: 失敗をTelegramに通知
+        if: failure()
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sS -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TG_CHAT}" \
+            --data-urlencode "disable_notification=true" \
+            --data-urlencode "text=❌ レトロゲーム相場の更新に失敗しました
+          ${RUN_URL}"
