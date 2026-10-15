@@ -1,0 +1,47 @@
+# ミニPCが止まっていると「相場データ更新」が動かず、失敗通知も来ない。
+# そこで朝にGitHubのサーバー側から、データが古くなっていないかだけを確認する。
+name: 更新チェック
+
+on:
+  schedule:
+    - cron: "43 22 * * *"   # UTC 22:43 = 日本時間 7:43（毎日）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: データの新しさを確認
+        id: age
+        run: |
+          python3 - <<'EOF'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p = Path("bookoff_prices.json")
+          if not p.exists():
+              print("まだデータがありません（初回実行前）")
+              raise SystemExit(0)
+          t = datetime.fromisoformat(json.loads(p.read_text(encoding="utf-8"))["generated_at"])
+          hours = (datetime.now(timezone.utc) - t).total_seconds() / 3600
+          print(f"最終更新から {hours:.1f} 時間")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"hours={hours:.0f}\n")
+              f.write(f"stale={'true' if hours > 30 else 'false'}\n")
+          EOF
+
+      - name: 古ければTelegramに通知
+        if: steps.age.outputs.stale == 'true'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HOURS: ${{ steps.age.outputs.hours }}
+        run: |
+          curl -sS -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TG_CHAT}" \
+            --data-urlencode "text=⚠️ レトロゲーム相場が ${HOURS} 時間更新されていません。ミニPCかrunnerが止まっているかもしれません。"

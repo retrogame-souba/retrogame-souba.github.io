@@ -8,10 +8,14 @@ raw_bookoff.json に保存する（ミニPCの中だけに置く。GitHubには�
 件数が多い検索は「価格帯」で自動的に分けて取得する。
 
 使い方:
-    source ~/.rakuten_env && python3 fetch_bookoff.py
+    source ~/.rakuten_env && python3 fetch_bookoff.py          … 全機種
+    source ~/.rakuten_env && python3 fetch_bookoff.py Vita     … 指定した機種だけ（複数可）
+
+エラーが1件でもあったら、raw_bookoff.json は上書きせずに終了コード1で止まる
+（前回の正しいデータを壊さないため。自動実行では失敗として通知される）。
 """
 
-import os, re, json, time, collections, urllib.parse, urllib.request, urllib.error
+import os, re, sys, json, time, collections, urllib.parse, urllib.request, urllib.error
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -105,19 +109,35 @@ class Fetcher:
             print(f"{indent}{lo}〜{hi}円: {got_total}件")
 
 
-def main():
+def main(only=None):
+    queries = QUERIES
+    if only:
+        wanted = {w.lower() for w in only}
+        queries = [q for q in QUERIES if q["keyword"].lower() in wanted]
+        if not queries:
+            print(f"指定した機種が見つかりません: {' '.join(only)}")
+            print("使える名前: " + " ".join(q["keyword"] for q in QUERIES))
+            sys.exit(2)
+
     f = Fetcher()
     items = {}  # URLで重複をなくす
-    for q in QUERIES:
+    errors = 0
+    for q in queries:
         before = len(items)
         print(f"■ {q['keyword']}")
         try:
             f.fetch_range(q, 0, PRICE_MAX, items)
         except urllib.error.HTTPError as e:
+            errors += 1
             print(f"  エラー: {e.code} {e.read().decode()[:150]}")
         except Exception as e:
+            errors += 1
             print(f"  エラー: {e}")
         print(f"  → 新しく {len(items) - before}件（API {f.calls}回目まで）")
+
+    if errors or not items:
+        print(f"\n❌ エラー{errors}件・取得{len(items)}件のため、{RAW_PATH.name} は更新しません")
+        sys.exit(1)
 
     RAW_PATH.write_text(json.dumps({
         "fetched_at": datetime.now(timezone.utc).isoformat(),
@@ -136,4 +156,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
