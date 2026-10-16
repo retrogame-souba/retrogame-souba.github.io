@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-10-15T20:22:51.689298+00:00",
+ "generated_at": "2026-10-16T19:59:02.211064+00:00",
  "source": "bookoff",
- "fetched_at": "2026-10-15T20:22:51.596101+00:00",
- "total": 506,
+ "fetched_at": "2026-10-16T19:59:02.114424+00:00",
+ "total": 505,
  "items": [
   {
    "platform": "ps2",
@@ -1619,26 +1619,6 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
-   "title": "IA/VT -COLORFUL- >",
-   "editions": {
-    "limited": {
-     "count": 1,
-     "min": 9900,
-     "median": 9900,
-     "items": [
-      {
-       "price": 9900,
-       "name": "【中古】 IA／VT　−COLORFUL−　＜クリスタルBOX＞／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017172299%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12750781%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
    "title": "IS<インフィニット・ストラトス>2 イグニッション・ハーツ",
    "editions": {
     "normal": {
@@ -2412,26 +2392,6 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
-   "title": "Unit 13",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 1815,
-     "median": 1815,
-     "items": [
-      {
-       "price": 1815,
-       "name": "【中古】 Unit 13／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016786939%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12281840%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
    "title": "VA-11 Hall-A(ヴァルハラ)",
    "editions": {
     "normal": {
@@ -2852,26 +2812,6 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
-   "title": "うた組み575",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 1089,
-     "median": 1089,
-     "items": [
-      {
-       "price": 1089,
-       "name": "【中古】 うた組み575／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017085232%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12695151%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
    "title": "この世の果てで恋を唄う少女 YU-NO",
    "editions": {
     "normal": {
@@ -3052,6 +2992,39 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
+   "title": "みんなのGOLF6",
+   "editions": {
+    "budget": {
+     "count": 1,
+     "min": 871,
+     "median": 871,
+     "items": [
+      {
+       "price": 871,
+       "name": "【中古】 みんなのGOLF6 PlayStationVita the Best／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017055602%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12675494%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    },
+    "normal": {
+     "count": 1,
+     "min": 871,
+     "median": 871,
+     "items": [
+      {
+       "price": 871,
+       "name": "【中古】 みんなのGOLF6／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016742232%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12255851%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
    "title": "やはりゲームでも俺の青春ラブコメはまちがっている。",
    "editions": {
     "normal": {
@@ -3183,6 +3156,26 @@
        "price": 3509,
        "name": "【中古】 ゆのはなSpRING！　〜Cherishing　Time〜　＜限定版＞／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018707450%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F14893264%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "ゆのはなSpRING!< >",
+   "editions": {
+    "limited": {
+     "count": 1,
+     "min": 2420,
+     "median": 2420,
+     "items": [
+      {
+       "price": 2420,
+       "name": "【中古】 ゆのはなSpRING！＜限定版＞／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017384464%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F13802176%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -4665,26 +4658,6 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
-   "title": "デモンゲイズ",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 1331,
-     "median": 1331,
-     "items": [
-      {
-       "price": 1331,
-       "name": "【中古】 デモンゲイズ／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016936915%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12268193%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
    "title": "デート・ア・ライブ Twin Edition 凜緒リンカーネイション",
    "editions": {
     "normal": {
@@ -4716,6 +4689,26 @@
        "price": 2783,
        "name": "【中古】 デート・ア・ライブ　Twin　Edition　凜緒リンカーネイション　＜限定版＞／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017352175%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F13775788%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "トトリのアトリエ Plus〜アーランドの錬金術士2〜",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 1815,
+     "median": 1815,
+     "items": [
+      {
+       "price": 1815,
+       "name": "【中古】 トトリのアトリエ　Plus〜アーランドの錬金術士2〜／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016906788%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F11570721%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -4796,6 +4789,46 @@
        "price": 1089,
        "name": "【中古】 ドラゴンボールZ　BATTLE　OF　Z／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017085241%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12695160%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "ドラゴンボールZ BATTLE OF Z Welcome Price!!",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 1089,
+     "median": 1089,
+     "items": [
+      {
+       "price": 1089,
+       "name": "【中古】 ドラゴンボールZ BATTLE OF Z Welcome Price！！／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018894228%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F15057722%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "ニューダンガンロンパV3 みんなのコロシアイ新学期",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 871,
+     "median": 871,
+     "items": [
+      {
+       "price": 871,
+       "name": "【中古】 ニューダンガンロンパV3 みんなのコロシアイ新学期／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018781266%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F14954646%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -5810,26 +5843,6 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
-   "title": "メルキス",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 4719,
-     "median": 4719,
-     "items": [
-      {
-       "price": 4719,
-       "name": "【中古】 メルキス／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0019297781%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F15421977%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
    "title": "メルルのアトリエ Plus 〜アーランドの錬金術士3〜",
    "editions": {
     "normal": {
@@ -6041,6 +6054,26 @@
        "price": 2420,
        "name": "【中古】 リトルバスターズ！Converted　Edition／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016775297%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12255845%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "リトルビッグプラネット PlayStationVita",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 2178,
+     "median": 2178,
+     "items": [
+      {
+       "price": 2178,
+       "name": "【中古】 リトルビッグプラネット　PlayStationVita／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016880419%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12255864%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -6361,6 +6394,26 @@
        "price": 580,
        "name": "【中古】 ワンピース　海賊無双2／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016962163%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12284610%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
+   "title": "ワンピース 海賊無双3",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 871,
+     "median": 871,
+     "items": [
+      {
+       "price": 871,
+       "name": "【中古】 ワンピース　海賊無双3／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017293706%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F13741050%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -6881,26 +6934,6 @@
        "price": 1331,
        "name": "【中古】 初音ミク −Project DIVA− X／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018605078%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F16117517%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
-   "title": "初音ミク -Project DIVA- f",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 871,
-     "median": 871,
-     "items": [
-      {
-       "price": 871,
-       "name": "【中古】 初音ミク −Project DIVA− f／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0016867207%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12281936%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -7514,46 +7547,6 @@
        "price": 1815,
        "name": "【中古】 忍び、恋うつつ　−甘蜜花絵巻−／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018922585%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F15081986%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
-   "title": "忍び、恋うつつ -雪月花恋絵巻",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 1331,
-     "median": 1331,
-     "items": [
-      {
-       "price": 1331,
-       "name": "【中古】 忍び、恋うつつ　−雪月花恋絵巻−／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017338921%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F13764079%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
-   "title": "悠久のティアブレイド -Fragments of Memory- < >",
-   "editions": {
-    "limited": {
-     "count": 1,
-     "min": 2420,
-     "median": 2420,
-     "items": [
-      {
-       "price": 2420,
-       "name": "【中古】 悠久のティアブレイド　−Fragments　of　Memory−　＜限定版＞／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018930488%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F15088672%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
@@ -9263,6 +9256,26 @@
   {
    "platform": "vita",
    "platform_label": "PS Vita",
+   "title": "英雄伝説 閃の軌跡II",
+   "editions": {
+    "normal": {
+     "count": 1,
+     "min": 580,
+     "median": 580,
+     "items": [
+      {
+       "price": 580,
+       "name": "【中古】 英雄伝説　閃の軌跡II／PSVITA",
+       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017202603%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F13614958%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
+       "postage_included": false
+      }
+     ]
+    }
+   }
+  },
+  {
+   "platform": "vita",
+   "platform_label": "PS Vita",
    "title": "英雄伝説 零の軌跡 Evolution",
    "editions": {
     "limited": {
@@ -9514,26 +9527,6 @@
        "price": 2783,
        "name": "【中古】 薄桜鬼　遊戯録　隊士達の大宴会　＜限定版＞／PSVITA",
        "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0018748870%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F14926333%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
-       "postage_included": false
-      }
-     ]
-    }
-   }
-  },
-  {
-   "platform": "vita",
-   "platform_label": "PS Vita",
-   "title": "薄桜鬼 鏡花録",
-   "editions": {
-    "normal": {
-     "count": 1,
-     "min": 1331,
-     "median": 1331,
-     "items": [
-      {
-       "price": 1331,
-       "name": "【中古】 薄桜鬼 鏡花録／PSVITA",
-       "url": "https://hb.afl.rakuten.co.jp/hgc/g00rc68o.jwhah80d.g00rc68o.jwhai979/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookoffonline%2F0017072270%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbookoffonline%2Fi%2F12686858%2F&rafcid=wsc_i_is_274e9313-aca4-48c1-86f6-253a15d826ff",
        "postage_included": false
       }
      ]
