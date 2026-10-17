@@ -80,7 +80,8 @@ def summarize(items: list[dict]) -> dict:
 def main():
     conf = json.loads(SOFTS_PATH.read_text(encoding="utf-8"))
     platforms = conf["platforms"]
-    common_ng = re.compile(conf["common_ng"], re.I)
+    cng = conf["common_ng"]
+    common_ng = re.compile(cng if isinstance(cng, str) else "|".join(cng.values()), re.I)
 
     results = []
     for i, soft in enumerate(conf["softs"], 1):
