@@ -9,10 +9,11 @@ softs.json のソフトを楽天市場APIで検索し、ふるいにかける前
   ・ここでは何も捨てない（判定は build_prices.py でやる）
 
 使い方:
-    source ~/.rakuten_env && python3 fetch_raw.py
+    source ~/.rakuten_env && python3 fetch_raw.py                  … 全ソフト
+    source ~/.rakuten_env && python3 fetch_raw.py ps1-ff7 ps1-gt   … 指定したソフトだけ取り直す（ほかは前回のまま）
 """
 
-import os, json, time, urllib.parse, urllib.request, urllib.error
+import os, sys, json, time, urllib.parse, urllib.request, urllib.error
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -61,14 +62,21 @@ def search(keyword: str, ng_keyword: str, page: int) -> list[dict]:
         return json.load(r).get("Items", [])
 
 
-def main():
+def main(only_ids=None):
     conf = json.loads(SOFTS_PATH.read_text(encoding="utf-8"))
+    targets = conf["softs"]
+    if only_ids:
+        targets = [s for s in targets if s["id"] in only_ids]
+        unknown = set(only_ids) - {s["id"] for s in targets}
+        if unknown:
+            print(f"softs.json にないID: {' '.join(sorted(unknown))}")
+            sys.exit(2)
     raw = []
-    for i, soft in enumerate(conf["softs"], 1):
+    for i, soft in enumerate(targets, 1):
         pf = conf["platforms"][soft["platform"]]
         keyword = " ".join(x for x in [pf["keyword"], soft["keyword"], "中古"] if x)
         ng_keyword = build_ng_keyword(soft, pf)
-        print(f"[{i}/{len(conf['softs'])}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
+        print(f"[{i}/{len(targets)}] {soft['title']}（{pf['label']}）… ", end="", flush=True)
 
         items, error = [], None
         for page in range(1, PAGES + 1):
@@ -103,6 +111,12 @@ def main():
             "items": items,
         })
 
+    if only_ids and RAW_PATH.exists():
+        # 指定したソフトだけ入れ替えて、ほかのソフトの生データは残す
+        new = {r["id"]: r for r in raw}
+        old = json.loads(RAW_PATH.read_text(encoding="utf-8"))["softs"]
+        raw = [new.pop(r["id"], r) for r in old] + list(new.values())
+
     RAW_PATH.write_text(json.dumps({
         "fetched_at": datetime.now(timezone.utc).isoformat(),
         "softs": raw,
@@ -111,4 +125,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

@@ -38,7 +38,14 @@ def norm(s: str) -> str:
     return re.sub(r"[‐‑‒–—―−]", "-", s)
 
 
-def judge(name: str, must, ngs) -> str:
+def compile_common_ng(common_ng) -> list:
+    """common_ng は「種類: 正規表現」の形（昔の1本の文字列でもよい）"""
+    if isinstance(common_ng, str):
+        common_ng = {"共通": common_ng}
+    return [(f"共通・{k}", re.compile(v, re.I)) for k, v in common_ng.items()]
+
+
+def judge(name: str, must, ngs, pf_must=None) -> str:
     """商品名を判定して、グループ名か「除外理由」を返す"""
     n = norm(name)
     if "中古" not in n:
@@ -49,6 +56,8 @@ def judge(name: str, must, ngs) -> str:
         m = ng.search(n)
         if m:
             return f"×除外({label}:{m.group(0)})"
+    if pf_must and not pf_must.search(n):
+        return "×機種名なし"
     edition = "limited" if LIMITED.search(n) else "budget" if BUDGET.search(n) else "normal"
     cond = "damaged" if DAMAGED.search(n) else "good"
     return f"{edition}_{cond}"
@@ -72,7 +81,7 @@ def summarize(items: list[dict]) -> dict:
 def main(debug_ids=None):
     conf = json.loads(SOFTS_PATH.read_text(encoding="utf-8"))
     raw = {r["id"]: r for r in json.loads(RAW_PATH.read_text(encoding="utf-8"))["softs"]}
-    common_ng = re.compile(conf["common_ng"], re.I)
+    common_ngs = compile_common_ng(conf["common_ng"])
 
     results = []
     for soft in conf["softs"]:
@@ -85,15 +94,23 @@ def main(debug_ids=None):
             continue
 
         must = re.compile(soft["must"], re.I)
-        ngs = [("共通", common_ng), ("機種", re.compile(pf["ng"], re.I))]
+        pf_must = re.compile(pf["must"], re.I) if pf.get("must") else None
+        ngs = common_ngs + [("機種", re.compile(pf["ng"], re.I))]
         if soft.get("ng"):
             ngs.append(("ソフト", re.compile(soft["ng"], re.I)))
 
         groups = {k: [] for k in GROUP_LABEL}
         if debug_ids:
             print(f"\n■ {soft['title']}（{pf['label']}） 検索語「{r['keyword']}」 {len(r['items'])}件")
+        seen = set()
         for x in r["items"]:
-            g = judge(x["name"], must, ngs)
+            # 同じ店が同じ商品名・同じ値段で何件も出していることがあるので、1件として数える
+            dup_key = (x["shop"], norm(x["name"]), x["price"])
+            if dup_key in seen:
+                g = "×重複"
+            else:
+                seen.add(dup_key)
+                g = judge(x["name"], must, ngs, pf_must)
             if g in groups:
                 groups[g].append(x)
             if debug_ids:
